@@ -1,5 +1,8 @@
 var wt = {
-	init: function() {
-		wt.app = new wt.App();
-	}
+  init: function() {
+    console.log('Starting WT app...');
+    wt.app = new wt.App({
+      el: '#wt-app'
+    });
+  }
 };

@@ -8,7 +8,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'build/client/scripts/wt.js',
-      'test/client/*.js'
+      'test/client/**/*.js'
     ],
 
     // list of files to exclude
