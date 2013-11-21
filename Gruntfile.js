@@ -1,10 +1,5 @@
 module.exports = function(grunt) {
-  var clientIncludeOrder = [
-    'client/scripts/wt/wt.js',
-    'client/scripts/wt/wt.polyfills.js',
-    'client/scripts/wt/wt.util.js',
-    'client/scripts/wt/wt.App.js'
-  ];
+  var clientIncludeOrder = require('./include.conf.js');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -111,10 +106,10 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [ 'jshint', 'clean', 'copy', 'concat' ]);
 
   // Run tests once
-  grunt.registerTask('e2e', [  'express', 'casperjs' ]);
+  grunt.registerTask('e2e', [ 'express', 'casperjs' ]);
 
   // Run tests once
-  grunt.registerTask('test', [  'karma:single', 'e2e' ]);
+  grunt.registerTask('test', [ 'karma:single', 'e2e' ]);
 
   // Start watching by default
   grunt.registerTask('default', [ 'build', 'express', 'karma:unit:start', 'watch' ]);

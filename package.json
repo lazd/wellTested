@@ -38,7 +38,11 @@
     "karma": "~0.10.5",
     "grunt-karma": "~0.6.2",
     "grunt-casperjs": "~1.4.0",
-    "grunt-express-server": "~0.4.5"
+    "grunt-express-server": "~0.4.5",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-requirejs": "~0.1.0",
+    "karma-coffee-preprocessor": "~0.1.0",
+    "karma-coverage": "~0.1.2"
   },
   "dependencies": {
     "express": "~3.4.4"

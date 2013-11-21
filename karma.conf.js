@@ -6,10 +6,9 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: [
-      'build/client/scripts/wt.js',
+    files: require('./include.conf.js').concat([
       'test/client/**/*.js'
-    ],
+    ]),
 
     // list of files to exclude
     exclude: [
@@ -18,7 +17,7 @@ module.exports = function(config) {
     // use dots reporter, as travis terminal does not support escaping sequences
     // possible values: 'dots', 'progress'
     // CLI --reporters progress
-    reporters: ['progress', 'junit'],
+    reporters: ['progress', 'junit', 'coverage'],
 
     junitReporter: {
       // will be resolved to basePath (in the same way as files/exclude patterns)
@@ -53,6 +52,19 @@ module.exports = function(config) {
     // CLI --browsers Chrome,Firefox,Safari
     browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
 
+    preprocessors: {
+      // Source files you want to generate coverage reports for
+      // This should not include tests or libraries
+      // These files will be instrumented by Istanbu
+      'client/scripts/wt/**/*.js': ['coverage']
+    },
+
+    // Configure the reporter
+    coverageReporter: {
+      type : 'html',
+      dir : 'results/coverage/'
+    },
+
     // If browser does not capture in given timeout [ms], kill it
     // CLI --capture-timeout 5000
     captureTimeout: 20000,
@@ -66,6 +78,7 @@ module.exports = function(config) {
     reportSlowerThan: 500,
 
     plugins: [
+      'karma-coverage',
       'karma-jasmine',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
