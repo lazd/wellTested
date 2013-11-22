@@ -9,7 +9,8 @@ module.exports = function(grunt) {
     },
     jshint: {
       gruntfile: 'Gruntfile.js',
-      tests: 'test/**/*.js',
+      clientTests: 'test/client/*.js',
+      e2eTests: 'test/e2e/*.js',
       client: clientIncludeOrder,
       options: {
         globals: {
@@ -64,8 +65,8 @@ module.exports = function(grunt) {
     },
     casperjs: {
       options: {
-       // Task-specific options go here.
-       casperjsOptions: ['--log-level=debug', '--direct', '--verbose']
+        // casperjsOptions: ['--engine=slimerjs'] // Use SlimerJS (Gecko)
+        // casperjsOptions: ['--log-level=debug', '--direct', '--verbose'] // Verbose logging
       },
       e2e: {
         files: {
@@ -84,11 +85,11 @@ module.exports = function(grunt) {
       },
       unitTests: {
         files: [ 'client/scripts/wt/**/*.js', 'test/client/**/*.js' ],
-        tasks: [ 'karma:unit:run' ]
+        tasks: [ 'jshint:clientTests', 'karma:unit:run' ]
       },
       e2eTests: {
         files: [ 'server/**', 'client/**', 'test/e2e/**/*.js' ],
-        tasks: [ 'casperjs' ]
+        tasks: [ 'jshint:e2eTests', 'casperjs' ]
       }
     }
   });
@@ -103,14 +104,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-casperjs');
 
   // Perform a build
-  grunt.registerTask('build', [ 'jshint', 'clean', 'copy', 'concat' ]);
+  grunt.registerTask('build', [ 'clean', 'copy', 'concat' ]);
 
-  // Run tests once
-  grunt.registerTask('e2e', [ 'express', 'casperjs' ]);
+  // Run e2e tests once
+  grunt.registerTask('teste2e', [ 'jshint:e2eTests', 'express', 'casperjs' ]);
 
-  // Run tests once
-  grunt.registerTask('test', [ 'karma:single', 'e2e' ]);
+  // Run client tests once
+  grunt.registerTask('testClient', [ 'jshint:clientTests', 'karma:single' ]);
+
+  // Run all tests once
+  grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
 
   // Start watching by default
-  grunt.registerTask('default', [ 'build', 'express', 'karma:unit:start', 'watch' ]);
+  grunt.registerTask('default', [ 'build', 'jshint', 'express', 'karma:unit:start', 'watch' ]);
 };
