@@ -115,6 +115,6 @@ module.exports = function(grunt) {
   // Run all tests once
   grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
 
-  // Start watching by default
+  // Start watching and run tests when files change
   grunt.registerTask('default', [ 'build', 'jshint', 'express', 'karma:unit:start', 'watch' ]);
 };
