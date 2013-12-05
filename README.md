@@ -53,6 +53,15 @@ The following Grunt plugins are used:
 * [grunt-contrib-watch] - Watch files for changes and run tasks accordingly
 
 
+# Services Used
+
+## [TravisCI]
+
+TravisCI is used to run tests when commits are pushed or pull requests are submitted.
+
+See [GUI & Headless browser testing with Travis](http://about.travis-ci.org/docs/user/gui-and-headless-browsers/) for information on setting up Travis for headless testing.
+
+
 # Todo
 
 We're not done here, there's plenty to do for this experiment to be well-vetted.
@@ -60,7 +69,6 @@ We're not done here, there's plenty to do for this experiment to be well-vetted.
 * Build a little server-side
   * Do server-side unit testing with [Jasmine] or [Mocha] + [Chai]
   * Do API integration testing with [APIEasy] or [Frisby]
-* Setup continous integration with [TravisCI]
 * Setup code coverage tracking with [Coveralls.io]
 
 
