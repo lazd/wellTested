@@ -51,6 +51,7 @@ The following Grunt plugins are used:
 * [grunt-express-server] - Start a server for CasperJS testing
 * [grunt-contrib-jshint] - Check for JavaScript errors before running tests
 * [grunt-contrib-watch] - Watch files for changes and run tasks accordingly
+* [grunt-karma-coveralls] - Submit code coverage reports to Coveralls
 
 
 # Services Used
@@ -60,6 +61,10 @@ The following Grunt plugins are used:
 TravisCI is used to run tests when commits are pushed or pull requests are submitted.
 
 See [GUI & Headless browser testing with Travis](http://about.travis-ci.org/docs/user/gui-and-headless-browsers/) for information on setting up Travis for headless testing.
+
+## [Coveralls]
+
+Coveralls is used to track code coverage over time. After tests run on TravisCI, the code coverage report is submitted to Coveralls.
 
 
 # Todo
@@ -81,10 +86,11 @@ We're not done here, there's plenty to do for this experiment to be well-vetted.
 [grunt-express-server]: https://github.com/ericclemmons/grunt-express-server
 [grunt-contrib-jshint]: https://github.com/gruntjs/grunt-contrib-jshint
 [grunt-contrib-watch]: https://github.com/gruntjs/grunt-contrib-watch
+[grunt-karma-coveralls]: https://github.com/mattjmorrison/grunt-karma-coveralls
 
 [Mocha]: http://visionmedia.github.io/mocha/
 [Chai]: http://chaijs.com/
 [APIEasy]: https://github.com/flatiron/api-easy
 [Frisby]: http://frisbyjs.com/
-[Coveralls.io]: https://coveralls.io/
+[Coveralls]: https://coveralls.io/
 [TravisCI]: https://travis-ci.org/
