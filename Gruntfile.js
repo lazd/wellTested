@@ -52,14 +52,15 @@ module.exports = function(grunt) {
       }
     },
     karma: {
-      // Watch configuration
-      unit: {
+      options: {
         configFile: 'karma.conf.js',
+      },
+      // Watch configuration
+      watch: {
         background: true
       },
       // Single-run configuration for CI
       single: {
-        configFile: 'karma.conf.js',
         singleRun: true
       }
     },
@@ -85,7 +86,7 @@ module.exports = function(grunt) {
       },
       unitTests: {
         files: [ 'client/scripts/wt/**/*.js', 'test/client/**/*.js' ],
-        tasks: [ 'jshint:clientTests', 'karma:unit:run' ]
+        tasks: [ 'jshint:clientTests', 'karma:watch:run' ]
       },
       e2eTests: {
         files: [ 'server/**', 'client/**', 'test/e2e/**/*.js' ],
@@ -116,5 +117,5 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
 
   // Start watching and run tests when files change
-  grunt.registerTask('default', [ 'build', 'jshint', 'express', 'karma:unit:start', 'watch' ]);
+  grunt.registerTask('default', [ 'build', 'jshint', 'express', 'karma:watch:start', 'watch' ]);
 };
