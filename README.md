@@ -69,7 +69,6 @@ We're not done here, there's plenty to do for this experiment to be well-vetted.
 * Build a little server-side
   * Do server-side unit testing with [Jasmine] or [Mocha] + [Chai]
   * Do API integration testing with [APIEasy] or [Frisby]
-* Setup code coverage tracking with [Coveralls.io]
 
 
 [Grunt]: http://gruntjs.com/

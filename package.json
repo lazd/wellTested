@@ -42,7 +42,8 @@
     "karma-html2js-preprocessor": "~0.1.0",
     "karma-requirejs": "~0.1.0",
     "karma-coffee-preprocessor": "~0.1.0",
-    "karma-coverage": "~0.1.2"
+    "karma-coverage": "~0.1.2",
+    "grunt-karma-coveralls": "~2.0.2"
   },
   "dependencies": {
     "express": "~3.4.4"

@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - '0.10'
-script: grunt build test
+script: grunt ci
 before_install:
   - 'npm install -g grunt-cli'
   - 'export DISPLAY=:99.0'

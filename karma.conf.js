@@ -61,8 +61,8 @@ module.exports = function(config) {
 
     // Configure the reporter
     coverageReporter: {
-      type : 'html',
-      dir : 'results/coverage/'
+      type: 'html',
+      dir: 'results/coverage/'
     },
 
     // If browser does not capture in given timeout [ms], kill it

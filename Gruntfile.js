@@ -54,14 +54,29 @@ module.exports = function(grunt) {
     karma: {
       options: {
         configFile: 'karma.conf.js',
+        reporters: ['progress', 'coverage']
       },
       // Watch configuration
       watch: {
-        background: true
+        background: true,
+        reporters: ['progress']
+      },
+      // Single-run configuration for development
+      single: {
+        singleRun: true,
       },
       // Single-run configuration for CI
-      single: {
-        singleRun: true
+      ci: {
+        singleRun: true,
+        coverageReporter: {
+          type: 'lcov',
+          dir: 'results/coverage/'
+        }
+      }
+    },
+    coveralls: {
+      options: {
+        coverage_dir: 'results/coverage/'
       }
     },
     casperjs: {
@@ -102,6 +117,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
   grunt.loadNpmTasks('grunt-casperjs');
 
   // Perform a build
@@ -115,6 +131,9 @@ module.exports = function(grunt) {
 
   // Run all tests once
   grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
+
+  // Run all tests once
+  grunt.registerTask('ci', [ 'build', 'karma:ci', 'coveralls', 'express', 'casperjs' ]);
 
   // Start watching and run tests when files change
   grunt.registerTask('default', [ 'build', 'jshint', 'express', 'karma:watch:start', 'watch' ]);
