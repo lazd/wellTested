@@ -60,7 +60,7 @@ body {
   background: rgb(250, 250, 250);
 }
 
-.todo-item--done > .todo-done {
+.todo-item--done .todo-done {
   opacity: 1;
 
   color: green;
