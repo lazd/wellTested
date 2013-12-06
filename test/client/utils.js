@@ -1,7 +1,7 @@
-describe('wt.utils', function() {
+describe('todo.utils', function() {
   describe('#beTrue', function() {
     it('should always return true', function() {
-      expect(wt.util.beTrue()).toBe(true);
+      expect(todo.util.beTrue()).toBe(true);
     });
   });
 });

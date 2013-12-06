@@ -1,6 +1,6 @@
 module.exports = [
-  'client/scripts/wt/wt.js',
-  'client/scripts/wt/wt.polyfills.js',
-  'client/scripts/wt/wt.util.js',
-  'client/scripts/wt/wt.App.js'
+  'client/scripts/todo/todo.js',
+  'client/scripts/todo/todo.polyfills.js',
+  'client/scripts/todo/todo.util.js',
+  'client/scripts/todo/todo.App.js'
 ];

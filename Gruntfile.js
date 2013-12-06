@@ -47,7 +47,7 @@ module.exports = function(grunt) {
       },
       wt: {
         files: {
-          'build/client/scripts/wt.js': clientIncludeOrder
+          'build/client/scripts/todo.js': clientIncludeOrder
         }
       }
     },
