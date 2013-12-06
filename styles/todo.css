@@ -36,6 +36,10 @@ body {
   line-height: 40px;
 }
 
+.todo-new {
+  width: 509px;
+}
+
 .todo-page {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
