@@ -31,7 +31,9 @@ todo.App.prototype.renderItem = function(name) {
 };
 
 todo.App.prototype.add = function(name) {
-	if (!name) return;
+	if (!todo.util.isValidTodoName(name)) return;
+
+	name = todo.util.trimTodoName(name);
 
 	this.items.push(name);
 
