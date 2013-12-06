@@ -104,9 +104,10 @@ module.exports = function(grunt) {
     phantomcss: {
       visual: {
         options: {
-          // configFile: 'test/visual/suite.js'
-          // configFile: 'config/testsuite.js'
-          configFile: '../../config/testsuite.js'
+          configFile: 'test/visual/suite.js',
+          screenshots: 'test/visual/screenshots',
+          failures: 'test/visual/failures',
+          server: 'http://localhost:3000/index.html'
         }
       },
     },
@@ -145,6 +146,9 @@ module.exports = function(grunt) {
 
   // Run client tests once
   grunt.registerTask('testClient', [ 'jshint:clientTests', 'karma:single' ]);
+
+  // Run all tests once
+  grunt.registerTask('testVisual', [ 'build', 'express:dev', 'phantomcss:visual' ]);
 
   // Run all tests once
   grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
