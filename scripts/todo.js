@@ -31,12 +31,25 @@ if (!Function.prototype.bind) {
     return fBound;
   };
 }
-todo.util = {
-	beTrue: function() {
-		return true;
-	}
-};
+(function() {
+	var lastId = 1;
 
+	// Valid todo names must contain at least 2 non-space characters
+	var validTodoRe = /[^\s]{2,}/;
+	var whiteSpaceRe = /^\s+|\s+$/g;
+
+	todo.util = {
+		trimTodoName: function(name) {
+			return name.replace(whiteSpaceRe, '');
+		},
+		isValidTodoName: function(name) {
+			return validTodoRe.test(name);
+		},
+		getUniqueId: function() {
+			return lastId++;
+		}
+	};
+}());
 todo.App = function(options) {
 	this.el = document.querySelector(options.el);
 
@@ -56,40 +69,85 @@ todo.App.prototype.render = function() {
 	this.items.forEach(this.renderItem.bind(this));
 };
 
-todo.App.prototype.renderItem = function(name) {
-	var li = document.createElement('li');
-	li.className = 'todo-item';
-	li.innerHTML = '<div class="todo-gutter"><button class="todo-remove"></button></div><label class="todo-label"></label>';
+todo.App.prototype.renderItem = function(item) {
+	// Create a new element or re-use the existing one
+	var el = item.el = item.el || document.createElement('li');
+	el.className = 'todo-item';
+	el.innerHTML = '<div class="todo-gutter"><button class="todo-done"></button></div><input class="todo-input" type="text"><button class="todo-remove"></button>';
 
-	li.setAttribute('data-name', name);
+	var input = el.querySelector('.todo-input');
+	input.value = item.name;
+	input.setAttribute('data-todo-id', item.id);
 
-	var label = li.querySelector('label');
-	label.textContent = name;
+	var doneButton = el.querySelector('.todo-done');
+	doneButton.setAttribute('data-todo-id', item.id);
 
-	this.list.appendChild(li);
+	var removeButton = el.querySelector('.todo-remove');
+	removeButton.setAttribute('data-todo-id', item.id);
+
+	this.list.appendChild(el);
 };
 
 todo.App.prototype.add = function(name) {
-	if (!name) return;
+	// Reject todos with invalid names
+	if (!todo.util.isValidTodoName(name)) return;
 
-	this.items.push(name);
+	// Create a new item
+	var item = {
+		id: todo.util.getUniqueId(),
+		name: todo.util.trimTodoName(name),
+		done: false
+	};
 
-	this.renderItem(name);
+	// Render it
+	this.renderItem(item);
+
+	// Store it
+	this.items.push(item);
+
+	return item.id;
 };
 
-todo.App.prototype.remove = function(el) {
-	var name = el.getAttribute('data-name');
-	var index = this.items.indexOf(name);
-	if (index !== -1) {
-		this.items.splice(index, 1);
-	}
+todo.App.prototype.getItem = function(id) {
+	var id = parseInt(id);
 
-	el.parentNode.removeChild(el);
+	for (var i = 0; i < this.items.length; i++) {
+		var item = this.items[i];
+		if (item.id === id) {
+			return item;
+		}
+	}
+	return null;
+};
+
+todo.App.prototype.toggleDone = function(id) {
+	var item = this.getItem(id);
+
+	if (item) {
+		item.done = !item.done;
+		if (item.done) {
+			item.el.classList.add('todo-item--done');
+		}
+		else {
+			item.el.classList.remove('todo-item--done');
+		}
+	}
+};
+
+todo.App.prototype.remove = function(id) {
+	var item = this.getItem(id);
+
+	if (item) {
+		this.items.splice(this.items.indexOf(item), 1);
+
+		item.el.parentNode.removeChild(item.el);
+	}
 };
 
 todo.App.prototype.addListeners = function() {
 	this.el.addEventListener('click', this.handleListClick.bind(this), false);
-	this.form.addEventListener('submit', this.handleFormSubmit.bind(this), false);
+	this.el.addEventListener('change', this.handleItemChange.bind(this), false);
+	this.el.addEventListener('submit', this.handleFormSubmit.bind(this), false);
 };
 
 todo.App.prototype.handleFormSubmit = function(evt) {
@@ -104,7 +162,26 @@ todo.App.prototype.handleFormSubmit = function(evt) {
 };
 
 todo.App.prototype.handleListClick = function(event) {
-	if (event.target.classList.contains('todo-remove')) {
-		this.remove(event.target.parentNode.parentNode);
+	var target = event.target;
+	if (target.classList.contains('todo-done')) {
+		var id = target.getAttribute('data-todo-id');
+		this.toggleDone(id);
+	}
+	else if (target.classList.contains('todo-remove')) {
+		var id = target.getAttribute('data-todo-id');
+		this.remove(id);
+	}
+};
+
+todo.App.prototype.handleItemChange = function(event) {
+	var target = event.target;
+	if (target.classList.contains('todo-input')) {
+		var id = target.getAttribute('data-todo-id');
+
+		// Only react to change events for existing items
+		if (id) {
+			var item = this.getItem(id);
+			item.name = target.value;
+		}
 	}
 };
