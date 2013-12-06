@@ -8,6 +8,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-karma-coveralls');
   grunt.loadNpmTasks('grunt-casperjs');
+  grunt.loadNpmTasks('grunt-phantomcss');
 
   var clientIncludeOrder = require('./include.conf.js');
 
@@ -99,6 +100,15 @@ module.exports = function(grunt) {
           'results/casper': 'test/e2e/**/*.js'
         }
       }
+    },
+    phantomcss: {
+      visual: {
+        options: {
+          // configFile: 'test/visual/suite.js'
+          // configFile: 'config/testsuite.js'
+          configFile: '../../config/testsuite.js'
+        }
+      },
     },
     watch: {
       gruntfile: {

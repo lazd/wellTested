@@ -37,7 +37,9 @@
     "karma-chrome-launcher": "~0.1.0",
     "karma-coverage": "~0.1.2",
     "grunt-karma": "~0.6.2",
-    "grunt-karma-coveralls": "~2.0.2"
+    "grunt-karma-coveralls": "~2.0.2",
+    "phantomjs": "~1.9.2-5",
+    "grunt-phantomcss": "~0.1.0"
   },
   "dependencies": {
     "express": "~3.4.4"
