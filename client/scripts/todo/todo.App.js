@@ -8,7 +8,7 @@ todo.App = function(options) {
 };
 
 todo.App.prototype.render = function() {
-	this.el.innerHTML = '<h1 class="todo-heading">todos</h1><div class="todo-page"><form class="todo-form todo-item"><div class="todo-gutter"></div><input class="todo-input" type="text" name="todo"></form><ul class="todo-list"></ul></div>';
+	this.el.innerHTML = '<h1 class="todo-heading">todos</h1><div class="todo-page"><form class="todo-form todo-item"><div class="todo-gutter"></div><input class="todo-input todo-new" type="text" name="todo"></form><ul class="todo-list"></ul></div>';
 
 	this.list = this.el.querySelector('.todo-list');
 	this.form = this.el.querySelector('.todo-form');
