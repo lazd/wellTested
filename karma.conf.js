@@ -17,12 +17,7 @@ module.exports = function(config) {
     // use dots reporter, as travis terminal does not support escaping sequences
     // possible values: 'dots', 'progress'
     // CLI --reporters progress
-    reporters: ['progress', 'junit', 'coverage'],
-
-    junitReporter: {
-      // will be resolved to basePath (in the same way as files/exclude patterns)
-      outputFile: 'results/test-results.xml'
-    },
+    reporters: ['progress', 'coverage'],
 
     // web server port
     // CLI --port 9876
@@ -50,7 +45,10 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     // CLI --browsers Chrome,Firefox,Safari
-    browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
+    browsers: process.env.TRAVIS ? [ 'Firefox' ] : [
+      'Firefox',
+      'Chrome'
+    ],
 
     preprocessors: {
       // Source files you want to generate coverage reports for
@@ -81,8 +79,7 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-jasmine',
       'karma-chrome-launcher',
-      'karma-firefox-launcher',
-      'karma-junit-reporter'
+      'karma-firefox-launcher'
     ]
   });
 };
