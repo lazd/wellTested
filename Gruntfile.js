@@ -30,8 +30,8 @@ module.exports = function(grunt) {
     },
     copy: {
       client: {
-        // Copy everything but the unconcatonated WT JS files
-        src: [ 'client/**', '!client/scripts/wt/**' ],
+        // Copy everything but the unconcatonated todo JS files
+        src: [ 'client/**', '!client/scripts/todo/**' ],
         dest: 'build/'
       },
       server: {
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
             '* <%= pkg.homepage %>/\n' +
             '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>; Licensed <%= pkg.license %> */\n'
       },
-      wt: {
+      todo: {
         files: {
           'build/client/scripts/todo.js': clientIncludeOrder
         }

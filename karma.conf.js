@@ -54,7 +54,7 @@ module.exports = function(config) {
       // Source files you want to generate coverage reports for
       // This should not include tests or libraries
       // These files will be instrumented by Istanbu
-      'client/scripts/wt/**/*.js': ['coverage']
+      'client/scripts/todo/**/*.js': ['coverage']
     },
 
     // Configure the reporter
