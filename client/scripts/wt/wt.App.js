@@ -8,7 +8,7 @@ wt.App = function(options) {
 };
 
 wt.App.prototype.render = function() {
-	this.el.innerHTML = '<h1>Well-Tested</h1><p class="wt-empty">No items.</p><ul class="wt-list"></ul><form class="wt-new"><input type="text" name="item"><button>Submit</button></form>';
+	this.el.innerHTML = '<h1 class="wt-heading">Well-Tested</h1><p class="wt-empty">No items.</p><ul class="wt-list"></ul><form class="wt-new"><input type="text" name="item"><button>Submit</button></form>';
 
 	this.list = this.el.querySelector('.wt-list');
 	this.form = this.el.querySelector('form.wt-new');
@@ -34,6 +34,8 @@ wt.App.prototype.renderItem = function(name) {
 };
 
 wt.App.prototype.add = function(name) {
+	if (!name) return;
+
 	this.items.push(name);
 
 	this.renderItem(name);

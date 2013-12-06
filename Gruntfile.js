@@ -1,4 +1,14 @@
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-express-server');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
+  grunt.loadNpmTasks('grunt-casperjs');
+
   var clientIncludeOrder = require('./include.conf.js');
 
   grunt.initConfig({
@@ -97,34 +107,31 @@ module.exports = function(grunt) {
       },
       client: {
         files: [ 'client/**' ],
-        tasks: [ 'build' ]
+        tasks: [ 'build', 'karma:watch:run', 'casperjs' ]
+      },
+      server: {
+        files: [ 'server/**' ],
+        tasks: [ 'build', 'express:dev', 'casperjs' ],
+        options: {
+          spawn: false // Restart server
+        }
       },
       unitTests: {
-        files: [ 'client/scripts/wt/**/*.js', 'test/client/**/*.js' ],
+        files: [ 'test/client/**/*.js' ],
         tasks: [ 'jshint:clientTests', 'karma:watch:run' ]
       },
       e2eTests: {
-        files: [ 'server/**', 'client/**', 'test/e2e/**/*.js' ],
+        files: [ 'test/e2e/**/*.js' ],
         tasks: [ 'jshint:e2eTests', 'casperjs' ]
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-express-server');
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-karma-coveralls');
-  grunt.loadNpmTasks('grunt-casperjs');
-
   // Perform a build
   grunt.registerTask('build', [ 'clean', 'copy', 'concat' ]);
 
   // Run e2e tests once
-  grunt.registerTask('teste2e', [ 'jshint:e2eTests', 'express', 'casperjs' ]);
+  grunt.registerTask('teste2e', [ 'jshint:e2eTests', 'express:dev', 'casperjs' ]);
 
   // Run client tests once
   grunt.registerTask('testClient', [ 'jshint:clientTests', 'karma:single' ]);
@@ -133,8 +140,8 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
 
   // Run all tests once
-  grunt.registerTask('ci', [ 'build', 'karma:ci', 'coveralls', 'express', 'casperjs' ]);
+  grunt.registerTask('ci', [ 'build', 'karma:ci', 'coveralls', 'express:dev', 'casperjs' ]);
 
   // Start watching and run tests when files change
-  grunt.registerTask('default', [ 'build', 'jshint', 'express', 'karma:watch:start', 'watch' ]);
+  grunt.registerTask('default', [ 'build', 'jshint', 'express:dev', 'karma:watch:start', 'watch' ]);
 };
