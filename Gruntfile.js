@@ -104,11 +104,12 @@ module.exports = function(grunt) {
     phantomcss: {
       visual: {
         options: {
-          configFile: 'test/visual/suite.js',
-          screenshots: 'test/visual/screenshots',
-          failures: 'test/visual/failures',
-          server: 'http://localhost:3000/index.html'
-        }
+          screenshots: 'test/visual/screenshots/',
+          results: 'results/visual/'
+        },
+        src: [
+          'test/visual/**.js'
+        ]
       },
     },
     watch: {
@@ -118,11 +119,11 @@ module.exports = function(grunt) {
       },
       client: {
         files: [ 'client/**' ],
-        tasks: [ 'build', 'karma:watch:run', 'casperjs' ]
+        tasks: [ 'build', 'karma:watch:run', 'casperjs', 'phantomcss:visual' ]
       },
       server: {
         files: [ 'server/**' ],
-        tasks: [ 'build', 'express:dev', 'casperjs' ],
+        tasks: [ 'build', 'express:dev', 'casperjs', 'phantomcss:visual' ],
         options: {
           spawn: false // Restart server
         }
