@@ -57,7 +57,7 @@ todo.App.prototype.add = function(name) {
 };
 
 todo.App.prototype.getItem = function(id) {
-	var id = parseInt(id);
+	id = parseInt(id);
 
 	for (var i = 0; i < this.items.length; i++) {
 		var item = this.items[i];
@@ -111,12 +111,11 @@ todo.App.prototype.handleFormSubmit = function(evt) {
 
 todo.App.prototype.handleListClick = function(event) {
 	var target = event.target;
+	var id = target.getAttribute('data-todo-id');
 	if (target.classList.contains('todo-done')) {
-		var id = target.getAttribute('data-todo-id');
 		this.toggleDone(id);
 	}
 	else if (target.classList.contains('todo-remove')) {
-		var id = target.getAttribute('data-todo-id');
 		this.remove(id);
 	}
 };
