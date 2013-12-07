@@ -22,6 +22,7 @@ module.exports = function(grunt) {
       gruntfile: 'Gruntfile.js',
       clientTests: 'test/client/*.js',
       e2eTests: 'test/e2e/*.js',
+      visualTests: 'test/visual/*.js',
       client: clientIncludeOrder,
       options: {
         globals: {
@@ -102,15 +103,26 @@ module.exports = function(grunt) {
       }
     },
     phantomcss: {
-      visual: {
+      desktop: {
         options: {
-          screenshots: 'test/visual/screenshots/',
-          results: 'results/visual/'
+          screenshots: 'test/visual/desktop/',
+          results: 'results/visual/desktop',
+          viewportSize: [ 1024, 768 ]
         },
         src: [
           'test/visual/**.js'
         ]
       },
+      mobile: {
+        options: {
+          screenshots: 'test/visual/mobile/',
+          results: 'results/visual/mobile',
+          viewportSize: [ 320, 480 ]
+        },
+        src: [
+          'test/visual/**.js'
+        ]
+      }
     },
     watch: {
       gruntfile: {
@@ -119,11 +131,11 @@ module.exports = function(grunt) {
       },
       client: {
         files: [ 'client/**' ],
-        tasks: [ 'build', 'karma:watch:run', 'casperjs', 'phantomcss:visual' ]
+        tasks: [ 'build', 'karma:watch:run', 'casperjs', 'phantomcss' ]
       },
       server: {
         files: [ 'server/**' ],
-        tasks: [ 'build', 'express:dev', 'casperjs', 'phantomcss:visual' ],
+        tasks: [ 'build', 'express:dev', 'casperjs', 'phantomcss' ],
         options: {
           spawn: false // Restart server
         }
@@ -135,6 +147,10 @@ module.exports = function(grunt) {
       e2eTests: {
         files: [ 'test/e2e/**/*.js' ],
         tasks: [ 'jshint:e2eTests', 'casperjs' ]
+      },
+      visualTests: {
+        files: [ 'test/visual/**/*.js' ],
+        tasks: [ 'jshint:visualTests', 'phantomcss' ]
       }
     }
   });
@@ -149,7 +165,7 @@ module.exports = function(grunt) {
   grunt.registerTask('testClient', [ 'jshint:clientTests', 'karma:single' ]);
 
   // Run all tests once
-  grunt.registerTask('testVisual', [ 'build', 'express:dev', 'phantomcss:visual' ]);
+  grunt.registerTask('testVisual', [ 'build', 'express:dev', 'phantomcss' ]);
 
   // Run all tests once
   grunt.registerTask('test', [ 'testClient', 'teste2e' ]);

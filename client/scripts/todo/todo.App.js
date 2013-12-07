@@ -8,7 +8,14 @@ todo.App = function(options) {
 };
 
 todo.App.prototype.render = function() {
-	this.el.innerHTML = '<h1 class="todo-heading">todos</h1><div class="todo-page"><form class="todo-form todo-item"><div class="todo-gutter"></div><input class="todo-input todo-new" type="text" name="todo"></form><ul class="todo-list"></ul></div>';
+	this.el.innerHTML = '<h1 class="todo-heading">todos</h1>'+
+						'<div class="todo-page">'+
+						'<ul class="todo-list"></ul>'+
+						'<form class="todo-form todo-item">'+
+						'<div class="todo-gutter"></div>'+
+						'<div class="todo-content"><input class="todo-input" type="text" name="todo"></div>'+
+						'</form>'+
+						'</div>';
 
 	this.list = this.el.querySelector('.todo-list');
 	this.form = this.el.querySelector('.todo-form');
@@ -21,7 +28,9 @@ todo.App.prototype.renderItem = function(item) {
 	// Create a new element or re-use the existing one
 	var el = item.el = item.el || document.createElement('li');
 	el.className = 'todo-item';
-	el.innerHTML = '<div class="todo-gutter"><button class="todo-done"></button></div><input class="todo-input" type="text"><button class="todo-remove"></button>';
+	el.innerHTML = '<div class="todo-gutter-right"><button class="todo-remove"></button></div>'+
+					'<div class="todo-gutter"><button class="todo-done"></button></div>'+
+					'<div class="todo-content"><input class="todo-input" type="text"></div>';
 
 	var input = el.querySelector('.todo-input');
 	input.value = item.name;
