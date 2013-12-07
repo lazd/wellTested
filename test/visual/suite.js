@@ -28,17 +28,25 @@ phantomcss.init({
   screenshotRoot: args.screenshots || './screenshots',
   failedComparisonsRoot: args.failures || './screenshots',
 
-    onFail: function(test){ console.log(test.filename, test.mismatch); },
-    onPass: function(test){ console.log(test.filename); },
-    onTimeout: function(test){ console.log(test.filename); },
-    onComplete: function(allTests, noOfFails, noOfErrors){
-        if(noOfFails + noOfErrors > 0){
-            console.log("There were " + noOfFails + " failures, and " + noOfErrors + " errors");
-        }
-        allTests.forEach(function(test){
-            if(test.fail){ console.log(test.filename, test.mismatch); }
-        });
+  onFail: function(test){
+    console.log('Failed: '+test.filename+' by a factor of '+test.mismatch);
+  },
+  onPass: function(test){
+    console.log('Passed: '+test.filename);
+  },
+  onTimeout: function(test){
+    console.log('Timeout: '+test.filename);
+  },
+  onComplete: function(allTests, noOfFails, noOfErrors){
+    var totalFailures = noOfFails + noOfErrors;
+    var noOfPasses = allTests.length - totalFailures;
+    console.log('Passed: '+ noOfPasses);
+    if (totalFailures > 0) {
+      console.log('Failed: '+ noOfFails);
+      console.log('Errors: '+ noOfErrors);
+      phantom.exit(1);
     }
+  }
 });
 
 /**
@@ -83,9 +91,9 @@ casper.start(args.server).then(function(){
 /**
  * End tests and compare screenshots
  */
-casper.then(function now_check_the_screenshots(){
+casper.then(function() {
     phantomcss.compareAll();
 }).
-run( function end_it(){
+run(function() {
     phantom.exit(phantomcss.getExitStatus());
 });
