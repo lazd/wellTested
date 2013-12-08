@@ -87,15 +87,11 @@ See [GUI & Headless browser testing with Travis](http://about.travis-ci.org/docs
 
 Coveralls is used to track code coverage over time. After tests run on TravisCI, the code coverage report is submitted to Coveralls.
 
-
-# Todo
-
-We're not done here, there's plenty to do for this experiment to be well-vetted.
-
+<!--
 * Build a little server-side
   * Do server-side unit testing with [Jasmine] or [Mocha] + [Chai]
   * Do API integration testing with [APIEasy] or [Frisby]
-
+-->
 
 [Grunt]: http://gruntjs.com/
 [Jasmine]: http://pivotal.github.io/jasmine/

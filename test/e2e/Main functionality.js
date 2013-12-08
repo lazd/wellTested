@@ -8,11 +8,10 @@ casper.on('page.error', function(msg, trace) {
   this.echo('Error: ' + msg, 'ERROR');
 });
 
-casper.test.begin('App is setup correctly', 3, function suite(test) {
+casper.test.begin('App is setup correctly', 2, function suite(test) {
   casper.start('http://localhost:3000/', function() {
-    test.assertTitle('todos', 'Page should have the correct title');
-    test.assertExists('.todo-heading', 'Heading should exist');
     test.assertExists('.todo-list', 'List should exist');
+    test.assertExists('.todo-form', 'Form should exist');
   });
 
   casper.run(function() {
@@ -22,7 +21,7 @@ casper.test.begin('App is setup correctly', 3, function suite(test) {
 
 casper.test.begin('Adds and removes todo items', 3, function suite(test) {
   casper.start('http://localhost:3000/', function() {
-    this.fill('form.todo-form', {
+    this.fill('.todo-form', {
       todo: 'Item1'
     }, true);
 

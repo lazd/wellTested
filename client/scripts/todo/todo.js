@@ -1,8 +1,9 @@
 var todo = {
-  init: function() {
+  init: function(todos) {
     console.log('Starting todo app...');
     todo.app = new todo.App({
-      el: '#todo-app'
+      el: '#todo-app',
+      items: todos
     });
   }
 };

@@ -1,21 +1,19 @@
 todo.App = function(options) {
 	this.el = document.querySelector(options.el);
 
-	this.items = [];
+	this.items = options.items || [];
 
 	this.render();
 	this.addListeners();
 };
 
 todo.App.prototype.render = function() {
-	this.el.innerHTML = '<h1 class="todo-heading">todos</h1>'+
-						'<div class="todo-page">'+
-						'<ul class="todo-list"></ul>'+
+	this.el.classList.add('todo-page');
+	this.el.innerHTML = '<ul class="todo-list"></ul>'+
 						'<form class="todo-form todo-item">'+
 						'<div class="todo-gutter"></div>'+
 						'<div class="todo-content"><input class="todo-input" type="text" name="todo"></div>'+
-						'</form>'+
-						'</div>';
+						'</form>';
 
 	this.list = this.el.querySelector('.todo-list');
 	this.form = this.el.querySelector('.todo-form');
@@ -25,6 +23,11 @@ todo.App.prototype.render = function() {
 };
 
 todo.App.prototype.renderItem = function(item) {
+	// Assign ID if necessary
+	if (!item.id) {
+		item.id = todo.util.getUniqueId();
+	}
+
 	// Create a new element or re-use the existing one
 	var el = item.el = item.el || document.createElement('li');
 	el.className = 'todo-item';
@@ -41,6 +44,10 @@ todo.App.prototype.renderItem = function(item) {
 
 	var removeButton = el.querySelector('.todo-remove');
 	removeButton.setAttribute('data-todo-id', item.id);
+
+	if (item.done) {
+		this.setDone(item);
+	}
 
 	this.list.appendChild(el);
 };
@@ -77,16 +84,24 @@ todo.App.prototype.getItem = function(id) {
 	return null;
 };
 
+todo.App.prototype.setDone = function(item) {
+	item.el.classList.add('todo-item--done');
+};
+
+todo.App.prototype.setNotDone = function(item) {
+	item.el.classList.remove('todo-item--done');
+};
+
 todo.App.prototype.toggleDone = function(id) {
 	var item = this.getItem(id);
 
 	if (item) {
 		item.done = !item.done;
 		if (item.done) {
-			item.el.classList.add('todo-item--done');
+			this.setDone(item);
 		}
 		else {
-			item.el.classList.remove('todo-item--done');
+			this.setNotDone(item);
 		}
 	}
 };
