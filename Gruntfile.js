@@ -168,7 +168,7 @@ module.exports = function(grunt) {
   grunt.registerTask('testVisual', [ 'build', 'express:dev', 'phantomcss' ]);
 
   // Run all tests once
-  grunt.registerTask('test', [ 'testClient', 'teste2e' ]);
+  grunt.registerTask('test', [ 'testClient', 'teste2e', 'testVisual' ]);
 
   // Run all tests once
   grunt.registerTask('ci', [ 'build', 'karma:ci', 'coveralls', 'express:dev', 'casperjs' ]);
