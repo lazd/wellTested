@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 html,
 body {
   margin: 0;
@@ -5,8 +9,12 @@ body {
 }
 
 body {
+  position: relative; /* Allow footer to be positioned at bottom of page */
+  box-sizing: border-box;
   width: 550px;
+  min-height: 100%;
   margin: 0 auto;
+  padding: 0 0 58px 0; /* Leave space for footer */
 
   background: #eaeaea;
 
@@ -14,30 +22,41 @@ body {
   color: #4d4d4d;
 }
 
+header {
+  padding: 10px;
+}
+header h1 {
+  margin: 0;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+
+  color: #999;
+  text-align: center;
+  text-shadow: 1px 1px rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+}
+
+footer p {
+  margin: 0;
+}
+
+a,
+a:visited {
+  color: #777;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .todo-heading {
   color: rgba(255, 255, 255, 0.3);
+  text-align: center;
   text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
-}
-
-.todo-input {
-  display: block;
-  float: left;
-  box-sizing: border-box;
-  height: 40px;
-  width: 469px;
-
-  padding-left: 12px;
-
-  border: none;
-
-  background: transparent;
-  
-  font: 18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  line-height: 40px;
-}
-
-.todo-new {
-  width: 509px;
 }
 
 .todo-page {
@@ -51,11 +70,27 @@ body {
   list-style: none;
 }
 
+.todo-input {
+  display: block;
+  box-sizing: border-box;
+  height: 40px;
+  width: 100%;
+
+  padding-left: 12px;
+
+  border: none;
+
+  background: transparent;
+  
+  font: 18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 40px;
+}
+
 .todo-item {
   margin: 0;
   height: 40px;
 
-  border-top: 1px solid rgb(155, 212, 232);
+  border-bottom: 1px solid rgb(155, 212, 232);
 
   background: rgb(250, 250, 250);
 }
@@ -67,7 +102,7 @@ body {
 }
 
 .todo-form {
-  border-top: none;
+  border-bottom: none;
 }
 
 .todo-gutter {
@@ -76,6 +111,12 @@ body {
   height: 40px;
 
   border-right: 1px solid rgb(246, 58, 72);
+}
+
+.todo-gutter-right {
+  float: right;
+  width: 40px;
+  height: 40px;
 }
 
 .todo-done,
@@ -124,4 +165,16 @@ body {
 .todo-remove:hover,
 .todo-remove:active {
   color: red;
+}
+
+.todo-content {
+  overflow: hidden;
+}
+
+@media only screen 
+and (min-width: 320px) 
+and (max-width: 568px) {
+  body {
+    width: 100%;
+  }
 }

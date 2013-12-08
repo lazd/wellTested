@@ -1,11 +1,12 @@
-/*! wellTested - v0.0.0 - 2013-12-06
+/*! wellTested - v0.0.0 - 2013-12-08
 * /
 * Copyright (c) 2013 Larry Davis <lazdnet@gmail.com>; Licensed Apache 2.0 */
 var todo = {
-  init: function() {
+  init: function(todos) {
     console.log('Starting todo app...');
     todo.app = new todo.App({
-      el: '#todo-app'
+      el: '#todo-app',
+      items: todos
     });
   }
 };
@@ -53,14 +54,19 @@ if (!Function.prototype.bind) {
 todo.App = function(options) {
 	this.el = document.querySelector(options.el);
 
-	this.items = [];
+	this.items = options.items || [];
 
 	this.render();
 	this.addListeners();
 };
 
 todo.App.prototype.render = function() {
-	this.el.innerHTML = '<h1 class="todo-heading">todos</h1><div class="todo-page"><form class="todo-form todo-item"><div class="todo-gutter"></div><input class="todo-input todo-new" type="text" name="todo"></form><ul class="todo-list"></ul></div>';
+	this.el.classList.add('todo-page');
+	this.el.innerHTML = '<ul class="todo-list"></ul>'+
+						'<form class="todo-form todo-item">'+
+						'<div class="todo-gutter"></div>'+
+						'<div class="todo-content"><input class="todo-input" type="text" name="todo"></div>'+
+						'</form>';
 
 	this.list = this.el.querySelector('.todo-list');
 	this.form = this.el.querySelector('.todo-form');
@@ -70,10 +76,17 @@ todo.App.prototype.render = function() {
 };
 
 todo.App.prototype.renderItem = function(item) {
+	// Assign ID if necessary
+	if (!item.id) {
+		item.id = todo.util.getUniqueId();
+	}
+
 	// Create a new element or re-use the existing one
 	var el = item.el = item.el || document.createElement('li');
 	el.className = 'todo-item';
-	el.innerHTML = '<div class="todo-gutter"><button class="todo-done"></button></div><input class="todo-input" type="text"><button class="todo-remove"></button>';
+	el.innerHTML = '<div class="todo-gutter-right"><button class="todo-remove"></button></div>'+
+					'<div class="todo-gutter"><button class="todo-done"></button></div>'+
+					'<div class="todo-content"><input class="todo-input" type="text"></div>';
 
 	var input = el.querySelector('.todo-input');
 	input.value = item.name;
@@ -84,6 +97,10 @@ todo.App.prototype.renderItem = function(item) {
 
 	var removeButton = el.querySelector('.todo-remove');
 	removeButton.setAttribute('data-todo-id', item.id);
+
+	if (item.done) {
+		this.setDone(item);
+	}
 
 	this.list.appendChild(el);
 };
@@ -109,7 +126,7 @@ todo.App.prototype.add = function(name) {
 };
 
 todo.App.prototype.getItem = function(id) {
-	var id = parseInt(id);
+	id = parseInt(id);
 
 	for (var i = 0; i < this.items.length; i++) {
 		var item = this.items[i];
@@ -120,16 +137,24 @@ todo.App.prototype.getItem = function(id) {
 	return null;
 };
 
+todo.App.prototype.setDone = function(item) {
+	item.el.classList.add('todo-item--done');
+};
+
+todo.App.prototype.setNotDone = function(item) {
+	item.el.classList.remove('todo-item--done');
+};
+
 todo.App.prototype.toggleDone = function(id) {
 	var item = this.getItem(id);
 
 	if (item) {
 		item.done = !item.done;
 		if (item.done) {
-			item.el.classList.add('todo-item--done');
+			this.setDone(item);
 		}
 		else {
-			item.el.classList.remove('todo-item--done');
+			this.setNotDone(item);
 		}
 	}
 };
@@ -163,12 +188,11 @@ todo.App.prototype.handleFormSubmit = function(evt) {
 
 todo.App.prototype.handleListClick = function(event) {
 	var target = event.target;
+	var id = target.getAttribute('data-todo-id');
 	if (target.classList.contains('todo-done')) {
-		var id = target.getAttribute('data-todo-id');
 		this.toggleDone(id);
 	}
 	else if (target.classList.contains('todo-remove')) {
-		var id = target.getAttribute('data-todo-id');
 		this.remove(id);
 	}
 };
