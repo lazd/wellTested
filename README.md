@@ -54,7 +54,11 @@ Istanbul generates code coverage reports for client-side unit tests.
 
 ## [CasperJS]
 
-CasperJS is used to run client-side end-to-end tests in a headless browsers.
+CasperJS is used to run client-side end-to-end tests in a headless browser.
+
+## [PhantomCSS]
+
+PhantomCSS is used to run visual regression tests in a headless browser.
 
 ## [Grunt]
 
@@ -64,7 +68,8 @@ The following Grunt plugins are used:
 
 * [grunt-karma] - Start Karma from Grunt
 * [grunt-casperjs] - Start CasperJS from Grunt
-* [grunt-express-server] - Start a server for CasperJS testing
+* [grunt-phantomcss] - Start PhantomCSS from Grunt
+* [grunt-express-server] - Start a server for CasperJS and PhantomCSS testing
 * [grunt-contrib-jshint] - Check for JavaScript errors before running tests
 * [grunt-contrib-watch] - Watch files for changes and run tasks accordingly
 * [grunt-karma-coveralls] - Submit code coverage reports to Coveralls
@@ -100,9 +105,11 @@ We're not done here, there's plenty to do for this experiment to be well-vetted.
 [karma-chrome-launcher]: https://github.com/karma-runner/karma-chrome-launcher
 [karma-firefox-launcher]: https://github.com/karma-runner/karma-firefox-launcher
 [CasperJS]: http://casperjs.org/
+[PhantomCSS]: https://github.com/Huddle/PhantomCSS
 [Istanbul]: http://gotwarlost.github.io/istanbul/
 [grunt-karma]: https://github.com/karma-runner/grunt-karma
 [grunt-casperjs]: https://github.com/ronaldlokers/grunt-casperjs
+[grunt-phantomcss]: https://github.com/chrisgladd/grunt-phantomcss
 [grunt-express-server]: https://github.com/ericclemmons/grunt-express-server
 [grunt-contrib-jshint]: https://github.com/gruntjs/grunt-contrib-jshint
 [grunt-contrib-watch]: https://github.com/gruntjs/grunt-contrib-watch
