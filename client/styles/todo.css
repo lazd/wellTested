@@ -138,12 +138,6 @@ a:visited {
   cursor: pointer;
 }
 
-
-.todo-done:hover,
-.todo-remove:hover {
-  opacity: 0.5;
-}
-
 .todo-done:active,
 .todo-remove:active {
   opacity: 1;
