@@ -111,7 +111,7 @@ Coveralls is used to track code coverage over time. After tests run on TravisCI,
 [grunt-contrib-watch]: https://github.com/gruntjs/grunt-contrib-watch
 [grunt-karma-coveralls]: https://github.com/mattjmorrison/grunt-karma-coveralls
 
-[Mocha]: http://visionmedia.github.io/mocha/
+[Mocha]: http://mochajs.org/
 [Chai]: http://chaijs.com/
 [APIEasy]: https://github.com/flatiron/api-easy
 [Frisby]: http://frisbyjs.com/
