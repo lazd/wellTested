@@ -94,7 +94,7 @@ Coveralls is used to track code coverage over time. After tests run on TravisCI,
 -->
 
 [Grunt]: http://gruntjs.com/
-[Jasmine]: http://pivotal.github.io/jasmine/
+[Jasmine]: https://jasmine.github.io/
 [Karma]: http://karma-runner.github.io/
 [karma-coverage]: https://github.com/karma-runner/karma-coverage
 [karma-jasmine]: https://github.com/karma-runner/karma-jasmine
